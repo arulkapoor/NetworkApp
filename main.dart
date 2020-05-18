@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'SocialIcons_icons.dart';
+import 'dart:collection';
+import 'dart:math';
 void main() {
   runApp(MyApp());
 }
@@ -10,10 +12,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  
   Widget build(BuildContext context) {
     final title = 'Tree';
-   
-
+    HashMap dict = new HashMap<int, List<String>>();
+    dict[0]=['Arul Kapoor','Software Engineer at Google','San Francisco, CA', 'huid_profile_photo.jpg'];
+    dict[1]=['Jackson Roberts', 'Data Scientist at Facebook','New York, NY','Jackson.jpeg'];
     return MaterialApp(
       title: title,
       home: Scaffold(
@@ -28,19 +32,33 @@ class _MyAppState extends State<MyApp> {
           crossAxisCount: 2,
           childAspectRatio: 0.7,
           children: List.generate(60, (index) {
-            return Stack(
+            return buildCards(index, dict);
+          })
+        ),
+      ),
+    );
+  }
+  Widget buildCards(int index, HashMap dict){
+    var rng = new Random();
+    int i = rng.nextInt(2);
+    String name = dict[i][0];
+    String occupation = dict[i][1];
+    String location = dict[i][2];
+    String image = dict[i][3];
+
+    return Stack(
                   children:<Widget>[ Container(
                 
                   padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     color: Colors.blueGrey[900],
-                    /*boxShadow: [
+                  /*  boxShadow: [
                            BoxShadow(
-                               color: Colors.tealAccent[400],
+                               color: Colors.white,
                                //offset: const Offset(3.0, 3.0),
-                               blurRadius: 0.25,
-                               spreadRadius: 0.25,
+                               blurRadius: 0.5,
+                               spreadRadius: 0.75,
                            )
                          ],*/
                   ),
@@ -82,19 +100,18 @@ class _MyAppState extends State<MyApp> {
                            ),
                    
                             child: CircleAvatar(
-                              backgroundImage: AssetImage('assets/huid_profile_photo.jpg'),
+                              backgroundImage: AssetImage('assets/$image'),
                               radius: 35,
 
 
                           ),
-                          
-                         
+
                  ),
                  ), 
                 Align(
                    alignment: Alignment(0, -0.2),
                    child: Text(
-                    'Arul Kapoor',
+                    '$name',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -111,15 +128,15 @@ class _MyAppState extends State<MyApp> {
                       Spacer(flex: 5),
                       Icon(
                         SocialIcons.briefcase,
-                        size: 10,
+                        size: 12,
                         color: Colors.white,
                         ),
                         Spacer(),
                     Text(
-                    'Software Engineer at Google',
+                    '$occupation',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 10,
+                      fontSize: 12,
                      
                     ),
                    ),
@@ -129,21 +146,21 @@ class _MyAppState extends State<MyApp> {
 
                  ),
                 Align(
-                   alignment: Alignment(0,0.2),
+                   alignment: Alignment(0,0.25),
                    child: Row(
                     children: <Widget>[
                       Spacer(flex: 10),
                       Icon(
                         SocialIcons.map_pin,
-                        size: 10,
+                        size: 12,
                         color: Colors.white,
                         ),
                         Spacer(),
                     Text(
-                    'San Francisco, CA',
+                    '$location',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 10,
+                      fontSize: 12,
                      
                     ),
                    ),
@@ -202,9 +219,5 @@ class _MyAppState extends State<MyApp> {
                       ),
 
                 ]);
-          })
-        ),
-      ),
-    );
   }
 }
